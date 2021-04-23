@@ -1,0 +1,6 @@
+include ':log'
+include ':net'
+include ':img'
+include ':lib_core'
+include ':app'
+rootProject.name = "kk"

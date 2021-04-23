@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+def dep = rootProject.ext.dependencies
+def version = rootProject.ext.dependenciesVersion
+android {
+    compileSdkVersion version.compileSdkVersion
+    buildToolsVersion version.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion version.minSdkVersion
+        targetSdkVersion version.targetSdkVersion
+        versionCode version.versionCode
+        versionName version.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            buildConfigField("String","baseUrl","\""+urls.release+"\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            buildConfigField("String","baseUrl","\""+urls.debug+"\"")
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    api dep.retrofit
+
+    api dep.retrofitgson
+    api dep.retrofitrxjava
+    api dep.okhttplog
+}
